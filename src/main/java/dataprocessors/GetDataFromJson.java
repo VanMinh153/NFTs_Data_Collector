@@ -12,52 +12,48 @@ import models.Hashtag;
 import models.NFT;
 import models.Tweet;
 
-/**
- *
- * @author quyetdaika
- */
 public interface GetDataFromJson extends ConstantVar {
-    Gson gson = new Gson();
-    default List<NFT> getNFTsFromJson(){
-        List<NFT> nfts = null;
-        try (FileReader reader = new FileReader(NFT_JSON_PATH)) {
-            Type type = new TypeToken<List<NFT>>() {}.getType();
-            nfts = gson.fromJson(reader, type);
-        } catch (Exception e) {
-            
-        }
-        return nfts;
+  Gson gson = new Gson();
+  
+  default List<NFT> getNFTsFromJson(){
+    List<NFT> nfts = null;
+    try (FileReader reader = new FileReader(NFT_JSON_PATH)) {
+      Type type = new TypeToken<List<NFT>>() {}.getType();
+      nfts = gson.fromJson(reader, type);
+    } catch (Exception e) {
     }
-    
-    default Set<String> getUniqueNFTNameToSearch(){
-        Set<String> uniqueNames = new HashSet<>();
-        List<NFT> nfts = getNFTsFromJson();
-        for(NFT x : nfts){
-            String name = x.getName().split(":|-")[0];
-            uniqueNames.add(name.trim());
-        }
-        return uniqueNames;
+    return nfts;
+  }
+  
+  default Set<String> getUniqueNFTNameToSearch(){
+    Set<String> uniqueNames = new HashSet<>();
+    List<NFT> nfts = getNFTsFromJson();
+    for(NFT x : nfts){
+      String name = x.getName().split(":|-")[0];
+      uniqueNames.add(name.trim());
     }
-    
-    default List<Tweet> getTweetsFromJson(){
-        List<Tweet> tweets = null;
-        try (FileReader reader = new FileReader(TWEET_JSON_PATH)) {
-            Type type = new TypeToken<List<Tweet>>() {}.getType();
-            tweets = gson.fromJson(reader, type);
-        } catch (Exception e) {
-            
-        }
-        return tweets;
+    return uniqueNames;
+  }
+  
+  default List<Tweet> getTweetsFromJson(){
+    List<Tweet> tweets = null;
+    try (FileReader reader = new FileReader(TWEET_JSON_PATH)) {
+      Type type = new TypeToken<List<Tweet>>() {}.getType();
+      tweets = gson.fromJson(reader, type);
+    } catch (Exception e) {
+      
     }
-    
-    default List<Hashtag> getHashtagsFromJson(){
-        List<Hashtag> hashtags = null;
-        try (FileReader reader = new FileReader(HASHTAG_JSON_PATH)) {
-            Type type = new TypeToken<List<Hashtag>>() {}.getType();
-            hashtags = gson.fromJson(reader, type);
-        } catch (Exception e) {
-            
-        }
-        return hashtags;
+    return tweets;
+  }
+  
+  default List<Hashtag> getHashtagsFromJson(){
+    List<Hashtag> hashtags = null;
+    try (FileReader reader = new FileReader(HASHTAG_JSON_PATH)) {
+      Type type = new TypeToken<List<Hashtag>>() {}.getType();
+      hashtags = gson.fromJson(reader, type);
+    } catch (Exception e) {
+      
     }
+    return hashtags;
+  }
 }
